@@ -52,6 +52,7 @@ def by_rank(leaderboard, nationality=None):
 
 def by_relative_scores(leaderboard, nationality=None):
     players_df = _parse_players(leaderboard['players'], nationality=nationality, metric='total_strokes')
+    tournament_name = leaderboard['tournament_name']
 
     if players_df is None:
         return None
@@ -59,7 +60,7 @@ def by_relative_scores(leaderboard, nationality=None):
     winning_strokes = players_df['total_strokes'].min()
     
     try:
-        players_df['relative_strokes'] = players_df['total_strokes'] - winning_strokes
+        players_df[tournament_name] = players_df['total_strokes'] - winning_strokes
     except TypeError:
         return None
 
